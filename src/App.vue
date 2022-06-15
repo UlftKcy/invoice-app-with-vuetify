@@ -21,5 +21,9 @@ export default {
     InvoiceItems,
     NavigationDrawer
   },
+  // states get from local storage
+  beforeMount() {
+    this.$store.commit('initialiseInvoices')
+},  
 };
 </script>

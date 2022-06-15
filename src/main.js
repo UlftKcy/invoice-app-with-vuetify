@@ -8,6 +8,11 @@ Vue.config.productionTip = false
 
 Vue.use(Vuetify);
 
+// states save to local storage
+store.subscribe( (mutation, state) => {
+  localStorage.setItem('invoices', JSON.stringify(state.invoices));   
+})
+
 new Vue({
   vuetify,
   store,

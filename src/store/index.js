@@ -40,27 +40,33 @@ export default new Vuex.Store({
       { text: "Price", value: "price" },
       { text: "Status", value: "status" },
     ],
-    drawer:false,
+    drawer: false,
   },
   getters: {
-    showDrawer(state){
-        return state.drawer;
-    }
+    showDrawer(state) {
+      return state.drawer;
+    },
   },
   actions: {
-    showDrawer({commit}){
-        commit("showDrawer")
+    showDrawer({ commit }) {
+      commit("showDrawer");
     },
-    saveInvoice({commit},newInvoice){
-        commit("saveInvoice",newInvoice);
+    saveInvoice({ commit }, newInvoice) {
+      commit("saveInvoice", newInvoice);
+    },
+    initialiseInvoices({ commit }){
+        commit("initialiseInvoices");
     }
   },
   mutations: {
-    showDrawer(state){
-        state.drawer = !state.drawer;
+    showDrawer(state) {
+      state.drawer = !state.drawer;
     },
-    saveInvoice(state,newInvoice){
-        state.invoices.push(newInvoice)
-    }
+    saveInvoice(state, newInvoice) {
+      state.invoices.push(newInvoice);
+    },
+    initialiseInvoices(state) {
+        state.invoices = JSON.parse(localStorage.invoices);
+      },
   },
 });
