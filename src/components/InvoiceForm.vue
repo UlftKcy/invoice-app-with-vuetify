@@ -1,6 +1,11 @@
 <template>
   <v-container fluid class="px-10">
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form
+      @submit.prevent="saveInvoice"
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
       <v-menu
         ref="menu"
         v-model="menu"
@@ -32,33 +37,34 @@
       <v-text-field
         v-model="name"
         prepend-icon="mdi-account"
-        :counter="100"
+        :counter="30"
         :rules="nameRules"
         label="Customer Name"
         required
       ></v-text-field>
       <v-text-field
         prepend-icon="mdi-currency-usd"
-        value=""
+        v-model="price"
         label="Price"
         :rules="priceRules"
       ></v-text-field>
 
-      <v-radio-group :rules="statusRules" row>
-        <v-col cols="12" md="6" lg="4">
-          <v-radio label="Pending" value="pending" color="warning"></v-radio>
+      <v-radio-group :rules="statusRules" v-model="status" row>
+        <v-col cols="12" md="6">
+          <v-radio label="Pending" value="Pending" color="warning"></v-radio>
         </v-col>
-        <v-col cols="12" md="6" lg="4">
-          <v-radio label="Paid" value="paid" color="success"></v-radio>
+        <v-col cols="12" md="6">
+          <v-radio label="Paid" value="Paid" color="success"></v-radio>
         </v-col>
       </v-radio-group>
 
-      <div class="d-flex justify-end">
-        <v-btn color="error" class="mr-4" @click="reset"> Clear </v-btn>
+      <div class="d-flex flex-wrap justify-start justify-sm-end">
+        <v-btn color="error" class="mr-4 mb-2" @click="reset"> Clear </v-btn>
         <v-btn
           :disabled="!valid"
           color="success"
-          class="mr-4"
+          class="mr-4 mb-2"
+          type="submit"
           @click="validate"
         >
           Create Invoice
@@ -74,9 +80,11 @@ export default {
   data: () => ({
     valid: true,
     name: "",
+    price: "",
+    status: "",
     nameRules: [
       (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      (v) => (v && v.length <= 30) || "Name must be less than 30 characters",
     ],
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -92,6 +100,17 @@ export default {
       this.$refs.form.validate();
     },
     reset() {
+      this.$refs.form.reset();
+    },
+    saveInvoice() {
+      const newInvoice = {
+        invoice_number: Math.floor(Math.random() * 100000),
+        date: this.date,
+        customer_name: this.name,
+        price: this.price,
+        status: this.status,
+      };
+      this.$store.dispatch("saveInvoice", newInvoice);
       this.$refs.form.reset();
     },
   },

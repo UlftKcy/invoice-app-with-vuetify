@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app v-model="drawer" width="30vw">
+  <v-navigation-drawer app v-model="drawer" width="width">
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6 pl-6">
@@ -27,6 +27,8 @@ export default {
         return newValue;
       },
     },
+
+
   },
 };
 </script>
