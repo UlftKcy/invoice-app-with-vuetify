@@ -16,13 +16,8 @@
 </template>
 
 <script>
-/* import InvoiceItem from "./InvoiceItem.vue"; */
-
 export default {
   name: "InvoiceItems",
-  components: {
-    /* InvoiceItem */
-  },
   data() {
     return {};
   },
@@ -37,8 +32,7 @@ export default {
   methods: {
     getColor(status) {
       if (status === "Paid") return "green";
-      else if (status === "Pending") return "orange";
-      else return "grey";
+      else return "orange";
     },
   },
 };
